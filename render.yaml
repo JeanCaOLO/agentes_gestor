@@ -1,11 +1,11 @@
 # Blueprint de Render · Mapa de Agentes IA (v4)
-# Sitio estático: no necesita compilación; Render publica la carpeta ./public tal cual.
+# Sitio estático: no necesita compilación; Render publica la carpeta ./out tal cual.
 services:
   - type: web
     name: mapa-agentes-capa-x
     runtime: static
     buildCommand: echo "Sitio estático, sin compilación"
-    staticPublishPath: ./public
+    staticPublishPath: ./out
     pullRequestPreviewsEnabled: false
     headers:
       - path: /*

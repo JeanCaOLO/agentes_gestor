@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Convierte las pantallas .dc.html del canvas en páginas estáticas para Render.
 
-Uso: python3 build.py <carpeta_con_project> <carpeta_public>
+Uso: python3 build.py <carpeta_con_project> <carpeta_out>
 """
 import html
 import re
@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 SRC = Path(sys.argv[1])
-OUT = Path(sys.argv[2])
+OUT = Path(sys.argv[2]) if len(sys.argv) > 2 else Path(__file__).parent / "out"
 
 PAGES = [
     # (archivo origen, archivo destino, título de pestaña)
