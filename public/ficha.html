@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ficha de agente · Capa X</title>
+<meta name="description" content="Mapa de agentes IA de la organización: Capa X, gobierno, métricas y centinela de seguridad. Datos de ejemplo.">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0F1419}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:#7CC4FA}a:hover{color:#B5DEFD}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="color:#E6EAF0;font-family:sans-serif;padding:24px">Esta aplicación necesita JavaScript.</p></noscript>
+<template id="dc-template">
+<div style="min-height: 73.75rem; display: flex; flex-direction: column; background: #0F1419; color: #E6EAF0; font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif; font-size: 14px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; padding: 14px 24px; border-bottom: 1px solid #222C38; background: #121820">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" style="fill: none; stroke: #7CC4FA; stroke-width: 1.8"><rect x="3" y="3" width="9" height="9" rx="2"></rect><rect x="16" y="16" width="9" height="9" rx="2"></rect><path d="M12 7.5h4.5a3 3 0 0 1 3 3V16"></path></svg>
+<span style="font-weight: 700; font-size: 16px">Capa X · Mapa de agentes</span>
+</div>
+<nav aria-label="Secciones" style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="index.html" style="padding: 8px 12px; border-radius: 6px; color: #9AA5B4; text-decoration: none">Workflow</a>
+<a href="registro.html" style="padding: 8px 12px; border-radius: 6px; color: #9AA5B4; text-decoration: none">Registro</a>
+<a href="ficha.html" style="padding: 8px 12px; border-radius: 6px; background: #1C2530; color: #E6EAF0; text-decoration: none; font-weight: 500">Fichas</a>
+</nav>
+<div style="flex: 1 1 auto"></div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #9AA5B4">Datos de ejemplo</span>
+</header>
+
+<main style="width: 100%; max-width: 1280px; margin: 0 auto; box-sizing: border-box; padding: 24px; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 760px">
+<a href="registro.html" style="font-size: 13px; text-decoration: none">← Registro de agentes</a>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+<span style="padding: 3px 8px; border-radius: 5px; background: #7CC4FA; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600">R1</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #9AA5B4">A-01</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 12px; border: 1px solid #2A5A44; color: #8EE8B6; font-size: 12px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #5BE49B; display: inline-block"></span>Prod · v1.4</span>
+</div>
+<h1 style="margin: 0; font-size: 30px; font-weight: 600">Clasificador de órdenes de compra</h1>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #B8C4D2">Lee órdenes de compra nuevas desde Softland, las clasifica por tipo de mercancía y prioridad, y deja la clasificación en API OLO para que eFlow WMS genere la orden de recepción.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<button type="button" style="min-height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid #2A3442; background: transparent">Abrir en n8n</button>
+<a href="index.html" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 8px; background: #7CC4FA; color: #0B1620; font-weight: 600; text-decoration: none">Ver en workflow</a>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px">
+<div style="padding: 14px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #9AA5B4">Compañía</span><span style="font-weight: 500">Mayoreo · Febeca</span></div>
+<div style="padding: 14px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #9AA5B4">Modelo IA</span><span style="font-weight: 500">Claude Haiku</span></div>
+<div style="padding: 14px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #9AA5B4">Orquestador</span><span style="font-weight: 500">n8n self-hosted</span></div>
+<div style="padding: 14px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #9AA5B4">En prod desde</span><span style="font-weight: 500">Marzo 2026</span></div>
+<div style="padding: 14px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #9AA5B4">Ejecuciones / mes</span><span style="font-weight: 500; font-family: 'IBM Plex Mono', monospace">18,420</span></div>
+<div style="padding: 14px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #9AA5B4">Responsable</span><span style="font-weight: 500">[Nombre del responsable]</span></div>
+</div>
+
+<section style="padding: 18px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600">Dónde vive · ambientes</h2>
+<div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px">
+<div style="flex: 1 1 220px; padding: 14px; border: 1px solid #2A3442; border-radius: 8px; background: #0F1419; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #9AA5B4">DEV</span><span style="font-weight: 500">n8n local · Docker</span><span style="font-size: 12px; color: #9AA5B4">Datos de prueba de Softland</span><span style="font-size: 12px; color: #8EE8B6">Completado</span></div>
+<span aria-hidden="true" style="align-self: center; color: #4A5A70; font-size: 20px">›</span>
+<div style="flex: 1 1 220px; padding: 14px; border: 1px solid #2A3442; border-radius: 8px; background: #0F1419; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #9AA5B4">QA</span><span style="font-weight: 500">n8n · Docker Capa X (qa)</span><span style="font-size: 12px; color: #9AA5B4">Intermedia eFlow · ambiente QA</span><span style="font-size: 12px; color: #8EE8B6">Aprobado</span></div>
+<span aria-hidden="true" style="align-self: center; color: #4A5A70; font-size: 20px">›</span>
+<div style="flex: 1 1 220px; padding: 14px; border: 1px solid #2E5A7A; border-radius: 8px; background: #14202C; display: flex; flex-direction: column; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #7CC4FA">PROD</span><span style="font-weight: 500">n8n · Docker Capa X (prod)</span><span style="font-size: 12px; color: #9AA5B4">Administrado por Intelix</span><span style="font-size: 12px; color: #8EE8B6">Activo desde Mar 2026</span></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px">
+<span style="color: #9AA5B4">Sistemas que toca:</span>
+<span style="padding: 3px 10px; border-radius: 12px; border: 1px solid #2A3442">Softland · lectura</span>
+<span style="padding: 3px 10px; border-radius: 12px; border: 1px solid #2A3442">API OLO · escritura</span>
+<span style="padding: 3px 10px; border-radius: 12px; border: 1px solid #2A3442">eFlow WMS · lectura</span>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px">
+
+<section style="flex: 3 1 520px; padding: 18px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px"><h2 style="margin: 0; font-size: 15px; font-weight: 600">Ejecuciones por semana</h2><span style="font-size: 12px; color: #9AA5B4">Últimas 8 semanas</span></div>
+<div role="img" aria-label="Ejecuciones semanales entre 4,120 y 4,700" style="display: flex; align-items: flex-end; gap: 10px; height: 190px; padding-top: 10px; border-bottom: 1px solid #2A3442">
+<div style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">4,120</span><div style="width: 100%; height: 140px; background: #3B9EDB; border-radius: 4px 4px 0 0"></div></div>
+<div style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">4,380</span><div style="width: 100%; height: 149px; background: #3B9EDB; border-radius: 4px 4px 0 0"></div></div>
+<div style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">4,510</span><div style="width: 100%; height: 154px; background: #3B9EDB; border-radius: 4px 4px 0 0"></div></div>
+<div style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">4,290</span><div style="width: 100%; height: 146px; background: #3B9EDB; border-radius: 4px 4px 0 0"></div></div>
+<div style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">4,460</span><div style="width: 100%; height: 152px; background: #3B9EDB; border-radius: 4px 4px 0 0"></div></div>
+<div style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">4,700</span><div style="width: 100%; height: 160px; background: #3B9EDB; border-radius: 4px 4px 0 0"></div></div>
+<div style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">4,610</span><div style="width: 100%; height: 157px; background: #3B9EDB; border-radius: 4px 4px 0 0"></div></div>
+<div style="flex: 1 1 0; display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">4,650</span><div style="width: 100%; height: 158px; background: #7CC4FA; border-radius: 4px 4px 0 0"></div></div>
+</div>
+<div style="display: flex; gap: 10px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4"><span style="flex: 1 1 0; text-align: center">S30</span><span style="flex: 1 1 0; text-align: center">S31</span><span style="flex: 1 1 0; text-align: center">S32</span><span style="flex: 1 1 0; text-align: center">S33</span><span style="flex: 1 1 0; text-align: center">S34</span><span style="flex: 1 1 0; text-align: center">S35</span><span style="flex: 1 1 0; text-align: center">S36</span><span style="flex: 1 1 0; text-align: center">S37</span></div>
+</section>
+
+<section style="flex: 2 1 320px; padding: 18px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600">Quién más lo usa</h2>
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; font-size: 13px"><span>Compras Febeca</span><span style="font-family: 'IBM Plex Mono', monospace">11,050 · 60 %</span></div><div style="height: 8px; border-radius: 4px; background: #1C2530"><div style="width: 60%; height: 8px; border-radius: 4px; background: #7CC4FA"></div></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; font-size: 13px"><span>Compras Sillaca</span><span style="font-family: 'IBM Plex Mono', monospace">4,420 · 24 %</span></div><div style="height: 8px; border-radius: 4px; background: #1C2530"><div style="width: 24%; height: 8px; border-radius: 4px; background: #3B9EDB"></div></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><div style="display: flex; justify-content: space-between; font-size: 13px"><span>Compras Beval</span><span style="font-family: 'IBM Plex Mono', monospace">2,950 · 16 %</span></div><div style="height: 8px; border-radius: 4px; background: #1C2530"><div style="width: 16%; height: 8px; border-radius: 4px; background: #3B9EDB"></div></div></div>
+<span style="font-size: 12px; color: #9AA5B4">Total del mes: 11,050 + 4,420 + 2,950 = 18,420 ejecuciones</span>
+</section>
+
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px">
+
+<section style="flex: 1 1 380px; padding: 18px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600">Gasto mensual</h2>
+<div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #222C38"><span style="color: #B8C4D2">Tokens del modelo</span><span style="font-family: 'IBM Plex Mono', monospace">$96</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #222C38"><span style="color: #B8C4D2">Infraestructura n8n · prorrateo Capa X</span><span style="font-family: 'IBM Plex Mono', monospace">$38</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #222C38"><span style="color: #B8C4D2">Monitoreo y logs</span><span style="font-family: 'IBM Plex Mono', monospace">$8</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; padding-top: 4px"><span>Total</span><span style="font-family: 'IBM Plex Mono', monospace">$142</span></div>
+<span style="font-size: 12px; color: #9AA5B4">Costo por ejecución: $142 ÷ 18,420 = $0.0077</span>
+</section>
+
+<section style="flex: 1 1 380px; padding: 18px; border: 1px solid #2E5A7A; border-radius: 10px; background: #14202C; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600">Costo-beneficio</h2>
+<div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #22303F"><span style="color: #B8C4D2">Horas-persona ahorradas</span><span style="font-family: 'IBM Plex Mono', monospace">310 h</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #22303F"><span style="color: #B8C4D2">Beneficio · 310 h × $12</span><span style="font-family: 'IBM Plex Mono', monospace">$3,720</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #22303F"><span style="color: #B8C4D2">Beneficio neto · $3,720 − $142</span><span style="font-family: 'IBM Plex Mono', monospace">$3,578</span></div>
+<div style="display: flex; justify-content: space-between; align-items: baseline; padding-top: 4px"><span style="font-size: 14px; font-weight: 600">ROI · $3,720 ÷ $142</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 24px; font-weight: 600; color: #7CC4FA">26.2×</span></div>
+</section>
+
+<section style="flex: 1 1 380px; padding: 18px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 600">Gobierno · riesgo R1</h2>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #222C38"><span style="color: #B8C4D2">Alcance</span><span style="text-align: right">Lectura y clasificación</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #222C38"><span style="color: #B8C4D2">Revisión humana</span><span style="text-align: right">[Muestreo %]</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 6px 0; border-bottom: 1px solid #222C38"><span style="color: #B8C4D2">Datos sensibles</span><span style="text-align: right">No · solo órdenes</span></div>
+<div style="display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 6px 0"><span style="color: #B8C4D2">Última revisión</span><span style="text-align: right">[Fecha]</span></div>
+</section>
+
+</div>
+
+</main>
+</div>
+</template>
+<script id="dc-logic" type="text/plain" data-props='{"$preview":{"width":1440,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+<script src="assets/vendor/preact.min.js"></script>
+<script src="assets/dc-lite.js"></script>
+<script>DCLite.boot();</script>
+</body>
+</html>

@@ -2,14 +2,10 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>Sistema de mapa de agentes IA · v4</title>
-<script src="./vendor/react.js"></script>
-<script src="./vendor/react-dom.js"></script>
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa de Agentes IA · Capa X</title>
+<meta name="description" content="Mapa de agentes IA de la organización: Capa X, gobierno, métricas y centinela de seguridad. Datos de ejemplo.">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
@@ -68,7 +64,11 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 @keyframes cnb{from{left:9%}to{left:99%}}
 @media (prefers-reduced-motion: reduce){.czbeam{animation:none;left:25%;opacity:.3!important}.czpulse{animation:none}.cenbeam{animation:none;opacity:0!important}}
 </style>
-</helmet>
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="color:#E6EAF0;font-family:sans-serif;padding:24px">Esta aplicación necesita JavaScript.</p></noscript>
+<template id="dc-template">
 <div class="{{rootCls}}" style="width: 100%; min-height: 62.5rem; display: flex; flex-direction: column; background: #0F1419; color: #E6EAF0; font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif; font-size: 14px">
 
 <header style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 12px 20px; border-bottom: 1px solid #222C38; background: #121820">
@@ -79,21 +79,21 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <div role="group" aria-label="Organización" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px">
 <span style="font-size: 12px; color: #9AA5B4; margin-right: 4px">Organización</span>
 <div style="display: flex; flex-wrap: wrap; gap: 2px; padding: 3px; border: 1px solid #2A3442; border-radius: 8px; background: #0F1419">
-<sc-for list="{{orgs}}" as="o" hint-placeholder-count="6">
+<template data-sc="for" list="{{orgs}}" as="o" hint-placeholder-count="6">
 <button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="min-height: 34px; padding: 4px 12px; border: 0; border-radius: 6px; background: {{o.bg}}; color: {{o.fg}}; font-size: 13px; font-weight: 500">{{o.label}}</button>
-</sc-for>
+</template>
 </div>
 </div>
-<sc-if value="{{hasSubs}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{hasSubs}}" hint-placeholder-val="{{ false }}">
 <div role="group" aria-label="Compañía" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px">
 <span style="font-size: 12px; color: #9AA5B4; margin-right: 4px">Compañía</span>
 <div style="display: flex; flex-wrap: wrap; gap: 2px; padding: 3px; border: 1px solid #2A3442; border-radius: 8px; background: #0F1419">
-<sc-for list="{{subs}}" as="s" hint-placeholder-count="4">
+<template data-sc="for" list="{{subs}}" as="s" hint-placeholder-count="4">
 <button type="button" onClick="{{s.pick}}" aria-pressed="{{s.pressed}}" style="min-height: 34px; padding: 4px 12px; border: 0; border-radius: 6px; background: {{s.bg}}; color: {{s.fg}}; font-size: 13px">{{s.label}}</button>
-</sc-for>
+</template>
 </div>
 </div>
-</sc-if>
+</template>
 <div style="flex: 1 1 auto"></div>
 <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #9AA5B4">{{scopeLabel}} · {{nAg}} agentes · Datos de ejemplo</span>
 </header>
@@ -102,9 +102,9 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <button type="button" onClick="{{goBack}}" style="min-height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid #2E5A7A; background: #15324A; color: #CFE8FB; font-size: 13px; font-weight: 600; opacity: {{backOp}}">{{backLabel}}</button>
 <button type="button" onClick="{{goHome}}" style="min-height: 34px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border-radius: 8px; border: 1px solid #2A3442; background: transparent; font-size: 13px"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" style="fill: none; stroke: #CBD5E1; stroke-width: 1.6; stroke-linejoin: round"><path d="M2 7.5 L8 2.5 L14 7.5 V14 H10 V10 H6 V14 H2 Z"></path></svg>Inicio</button>
 <nav aria-label="Ubicación actual" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-left: 6px; font-size: 13px">
-<sc-for list="{{crumbs}}" as="c" hint-placeholder-count="3">
+<template data-sc="for" list="{{crumbs}}" as="c" hint-placeholder-count="3">
 <span style="display: inline-flex; align-items: center; gap: 6px"><span aria-hidden="true" style="color: #4A5A70">{{c.sep}}</span><button type="button" onClick="{{c.pick}}" aria-current="{{c.cur}}" style="min-height: 30px; padding: 0 4px; border: 0; background: transparent; color: {{c.fg}}; font-weight: {{c.weight}}; text-decoration: {{c.deco}}; text-underline-offset: 3px">{{c.label}}</button></span>
-</sc-for>
+</template>
 </nav>
 <div style="flex: 1 1 auto"></div>
 <span style="font-size: 12px; color: #9AA5B4">{{histLabel}}</span>
@@ -114,9 +114,9 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 
 <nav aria-label="Módulos" style="flex: 0 0 200px; box-sizing: border-box; padding: 16px 12px; border-right: 1px solid #222C38; background: #121820; display: flex; flex-direction: column; gap: 4px">
 <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #9AA5B4; padding: 0 8px 8px">Módulos</span>
-<sc-for list="{{mods}}" as="m" hint-placeholder-count="3">
+<template data-sc="for" list="{{mods}}" as="m" hint-placeholder-count="3">
 <button type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" style="min-height: 44px; display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 0; border-radius: 8px; background: {{m.bg}}; color: {{m.fg}}; text-align: left"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #7CC4FA">{{m.num}}</span><span style="flex: 1 1 auto; font-weight: 500">{{m.label}}</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">{{m.badge}}</span></button>
-</sc-for>
+</template>
 <div style="margin-top: 16px; padding: 10px; border: 1px solid #222C38; border-radius: 8px; display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #9AA5B4">
 <span style="font-weight: 600; color: #B8C4D2">Riesgo · 5 preguntas</span>
 <span><b style="color: #7CC4FA">R1</b> Bajo · suma 5–8</span>
@@ -129,7 +129,7 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 
 <main style="flex: 999 1 560px; min-width: 0; box-sizing: border-box; padding: 20px; display: flex; flex-direction: column; gap: 16px">
 
-<sc-if value="{{isCapax}}" hint-placeholder-val="{{ true }}">
+<template data-sc="if" value="{{isCapax}}" hint-placeholder-val="{{ true }}">
 <div style="display: flex; flex-direction: column; gap: 12px">
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
 <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 22px; font-weight: 600">Capa X · la red de la organización</h1><span style="font-size: 13px; color: #9AA5B4">Los datos nacen en cada compañía, se juntan en zonas compartidas y llegan al núcleo, donde trabajan los agentes IA.</span></div>
@@ -141,9 +141,9 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 </div>
 <div role="group" aria-label="¿Qué querés ver?" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px">
 <span style="font-size: 12px; color: #9AA5B4; margin-right: 4px">¿Qué querés ver?</span>
-<sc-for list="{{lensOpts}}" as="o" hint-placeholder-count="5">
+<template data-sc="for" list="{{lensOpts}}" as="o" hint-placeholder-count="5">
 <button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="min-height: 36px; display: flex; align-items: center; gap: 8px; padding: 4px 14px; border-radius: 18px; border: 1px solid {{o.border}}; background: {{o.bg}}; color: {{o.fg}}; font-size: 13px; font-weight: 500"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #00AEEF">{{o.num}}</span>{{o.label}}</button>
-</sc-for>
+</template>
 </div>
 
 <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
@@ -154,12 +154,12 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <rect x="0" y="12" width="1700" height="205" fill="rgba(255,255,255,0.018)"></rect>
 <rect x="225" y="252" width="1462" height="455" rx="22" fill="rgba(232,163,61,0.03)" stroke="#E8A33D" stroke-opacity="0.55" stroke-width="2" stroke-dasharray="10 8"></rect>
 <rect x="0" y="792" width="1700" height="160" fill="rgba(255,255,255,0.025)"></rect>
-<sc-for list="{{links}}" as="l" hint-placeholder-count="20">
+<template data-sc="for" list="{{links}}" as="l" hint-placeholder-count="20">
 <path class="{{l.cls}}" d="{{l.d}}" style="stroke: {{l.color}}; stroke-width: {{l.w}}; opacity: {{l.op}}"></path>
-</sc-for>
-<sc-for list="{{parts}}" as="p" hint-placeholder-count="20">
+</template>
+<template data-sc="for" list="{{parts}}" as="p" hint-placeholder-count="20">
 <circle class="pt" r="{{p.r}}" style="offset-path: path('{{p.d}}'); fill: {{p.color}}; opacity: {{p.op}}; animation-duration: {{p.dur}}; animation-delay: {{p.delay}}"></circle>
-</sc-for>
+</template>
 </svg>
 <div class="blab" style="top: 11.9%"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #00AEEF">01</span><b style="font-size: 12px">Compañías</b><span style="font-size: 10.5px; color: #9AA5B4; line-height: 1.3">Dueñas de los datos</span></div>
 <div class="blab" style="top: 38%"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #00AEEF">02</span><b style="font-size: 12px">Capas X</b><span style="font-size: 10.5px; color: #9AA5B4; line-height: 1.3">Una por compañía, resguardada</span></div>
@@ -167,28 +167,28 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <div class="blab" style="top: 90.6%"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #00AEEF">04</span><b style="font-size: 12px">Agentes IA</b><span style="font-size: 10.5px; color: #9AA5B4; line-height: 1.3">Viven en la capa de su compañía</span></div>
 <div style="position: absolute; left: 14.3%; top: 29.4%; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #E8A33D; pointer-events: none">AWS · una sola nube, un espacio separado por compañía</div>
 
-<sc-for list="{{subNodes}}" as="n" hint-placeholder-count="11">
+<template data-sc="for" list="{{subNodes}}" as="n" hint-placeholder-count="11">
 <button type="button" class="node" onClick="{{n.pick}}" title="{{n.full}}" style="left: {{n.l}}; top: {{n.t}}; --oy: -9px; opacity: {{n.op}}"><span style="width: 18px; height: 18px; border-radius: 50%; background: {{n.color}}; box-shadow: 0 0 10px {{n.color}}; border: 2px solid {{n.ring}}; box-sizing: border-box"></span><span style="font-size: 10px; color: #CBD5E1; white-space: nowrap">{{n.label}}</span></button>
-</sc-for>
-<sc-for list="{{hubs}}" as="n" hint-placeholder-count="5">
+</template>
+<template data-sc="for" list="{{hubs}}" as="n" hint-placeholder-count="5">
 <button type="button" class="node" onClick="{{n.pick}}" aria-pressed="{{n.pressed}}" style="left: {{n.l}}; top: {{n.t}}; --oy: -29px; opacity: {{n.op}}"><span class="hubc" style="width: 58px; height: 58px; border-radius: 50%; box-sizing: border-box; color: {{n.color}}; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.45), transparent 55%), {{n.color}}; border: 3px solid {{n.ring}}"></span><span style="font-size: 13px; font-weight: 700; white-space: nowrap; text-shadow: 0 1px 6px #000">{{n.label}}</span><span style="font-size: 10px; color: #9AA5B4; white-space: nowrap">{{n.meta}}</span></button>
-</sc-for>
-<sc-for list="{{chans}}" as="n" hint-placeholder-count="4">
+</template>
+<template data-sc="for" list="{{chans}}" as="n" hint-placeholder-count="4">
 <button type="button" class="node" onClick="{{n.pick}}" aria-pressed="{{n.pressed}}" style="left: {{n.l}}; top: {{n.t}}; --oy: -50%; opacity: {{n.op}}"><span style="display: flex; flex-direction: column; align-items: center; gap: 2px; max-width: 170px; padding: 5px 10px; border-radius: 10px; border: 1px solid {{n.border}}; background: rgba(10,15,20,0.92); text-align: center"><span style="display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; white-space: nowrap"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{n.ca}}; display: inline-block"></span>{{n.label}}<span style="width: 8px; height: 8px; border-radius: 50%; background: {{n.cb}}; display: inline-block"></span></span><span style="font-size: 9.5px; line-height: 1.3; color: #B8C4D2">{{n.t2}}</span></span></button>
-</sc-for>
-<sc-for list="{{capas}}" as="n" hint-placeholder-count="5">
+</template>
+<template data-sc="for" list="{{capas}}" as="n" hint-placeholder-count="5">
 <button type="button" class="node" onClick="{{n.pick}}" aria-pressed="{{n.pressed}}" style="left: {{n.l}}; top: {{n.t}}; --oy: -50%; opacity: {{n.op}}"><span style="display: flex; flex-direction: column; align-items: flex-start; gap: 3px; width: 168px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; border: 2px {{n.bs}} {{n.color}}; background: {{n.bg}}; box-shadow: 0 0 22px {{n.glow}}; text-align: left"><span style="display: flex; width: 100%; justify-content: space-between; align-items: center; gap: 6px"><b style="font-size: 13px; color: {{n.color}}">{{n.label}}</b><span style="font-size: 13px">{{n.icon}}</span></span><span style="font-size: 10.5px; color: {{n.stColor}}">{{n.status}}</span><span style="font-size: 10px; color: #9AA5B4">{{n.meta}}</span></span></button>
-</sc-for>
-<sc-for list="{{agNodes}}" as="n" hint-placeholder-count="24">
+</template>
+<template data-sc="for" list="{{agNodes}}" as="n" hint-placeholder-count="24">
 <button type="button" class="node" onClick="{{n.pick}}" title="{{n.name}}" aria-pressed="{{n.pressed}}" style="left: {{n.l}}; top: {{n.t}}; --oy: -11px; opacity: {{n.op}}"><span class="{{n.cls}}" style="width: 22px; height: 22px; box-sizing: border-box; border-radius: 50%; background: {{n.color}}; border: 3px solid {{n.ring}}; box-shadow: 0 0 12px {{n.color}}"></span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: #CBD5E1">{{n.id}}</span></button>
-</sc-for>
-<sc-for list="{{agLabels}}" as="n" hint-placeholder-count="5">
+</template>
+<template data-sc="for" list="{{agLabels}}" as="n" hint-placeholder-count="5">
 <div style="position: absolute; left: {{n.l}}; top: {{n.t}}; transform: translate(-50%, -50%); font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: {{n.color}}; white-space: nowrap; opacity: {{n.op}}; pointer-events: none">{{n.label}}</div>
-</sc-for>
+</template>
 <span class="cenbeam" aria-hidden="true" style="position: absolute; top: 23.6%; height: 4.9%; width: 3px; border-radius: 2px; background: #E5484D; box-shadow: 0 0 14px 3px rgba(229,72,77,.55); opacity: {{cenNet.beamOp}}; transition: opacity .45s; pointer-events: none"></span>
-<sc-for list="{{cenDesks}}" as="d" hint-placeholder-count="5">
+<template data-sc="for" list="{{cenDesks}}" as="d" hint-placeholder-count="5">
 <div title="{{d.title}}" style="position: absolute; left: {{d.l}}; top: {{d.t}}; transform: translate(-50%, -6px); display: flex; flex-direction: column; align-items: center; gap: 2px; opacity: {{d.op}}; transition: opacity .45s"><span style="width: 16px; height: 12px; box-sizing: border-box; border-radius: 3px; border: 1.5px solid {{d.bd}}; background: {{d.bg}}; box-shadow: 0 0 8px {{d.glow}}; transition: background .3s"></span><span style="font-size: 9px; color: #F2A3A5; white-space: nowrap">{{d.label}}</span></div>
-</sc-for>
+</template>
 <div aria-hidden="true" style="position: absolute; left: {{cenNet.aL}}; top: {{cenNet.aT}}; width: 34px; height: 34px; margin: -17px 0 0 -17px; color: #E5484D; opacity: {{cenNet.alertOp}}; transition: opacity .4s; pointer-events: none"><span class="ring"></span><span class="ring" style="animation-delay: -1.3s"></span><svg viewBox="0 0 34 34" width="34" height="34" style="position: absolute; inset: 0; fill: none; stroke: #FF6B6F; stroke-width: 3; stroke-linecap: round"><path d="M11 11L23 23M23 11L11 23"></path></svg></div>
 <div aria-hidden="true" style="position: absolute; left: {{cenNet.aL}}; top: {{cenNet.aLabT}}; transform: translate(-50%, -50%); padding: 3px 8px; border-radius: 6px; border: 1px solid #E5484D; background: rgba(42,18,22,.96); color: #FFD3D4; font-size: 10.5px; font-weight: 600; white-space: nowrap; opacity: {{cenNet.alertOp}}; transition: opacity .4s; pointer-events: none">{{cenNet.alertTxt}}</div>
 <div aria-hidden="true" style="position: absolute; left: {{cenNet.gL}}; top: {{cenNet.gT}}; transform: translate(-50%, -50%); padding: 3px 8px; border-radius: 6px; border: 1px solid #E9C46A; background: rgba(21,19,12,.96); color: #E9C46A; font-size: 10.5px; font-weight: 600; white-space: nowrap; opacity: {{cenNet.gateOp}}; transition: opacity .4s; pointer-events: none">Autorizado · entra por la puerta de 5 pasos</div>
@@ -196,48 +196,48 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 </div>
 <div style="position: absolute; inset: 0; transform-origin: 58.24% 38.02%; transform: {{inTf}}; opacity: {{inOp}}; pointer-events: {{inPe}}; transition: transform .9s cubic-bezier(.2,.8,.2,1) {{inDelay}}, opacity .5s ease {{inDelay}}; background: radial-gradient(ellipse at 50% 40%, rgba(0,174,239,0.08), transparent 60%), radial-gradient(#18212C 1px, transparent 1px) 0 0 / 20px 20px, #0B1118">
 <div style="position: absolute; inset: 0; transform-origin: 0 0; transform: {{inZoomTf}}; transition: transform .8s cubic-bezier(.2,.8,.2,1)">
-<sc-for list="{{iClusters}}" as="c" hint-placeholder-count="7">
+<template data-sc="for" list="{{iClusters}}" as="c" hint-placeholder-count="7">
 <div style="position: absolute; left: {{c.l}}; top: {{c.t}}; width: {{c.w}}; height: {{c.h}}; box-sizing: border-box; border-radius: 14px; border: 1.5px {{c.bs}} {{c.color}}; background: {{c.bg}}; opacity: {{c.op}}; transition: opacity .4s"></div>
-</sc-for>
+</template>
 <svg viewBox="0 0 1700 960" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible">
-<sc-for list="{{iLinks}}" as="l" hint-placeholder-count="20">
+<template data-sc="for" list="{{iLinks}}" as="l" hint-placeholder-count="20">
 <path class="lk fl" d="{{l.d}}" style="stroke: {{l.color}}; stroke-width: {{l.w}}; opacity: {{l.op}}"></path>
-</sc-for>
-<sc-for list="{{iParts}}" as="p" hint-placeholder-count="20">
+</template>
+<template data-sc="for" list="{{iParts}}" as="p" hint-placeholder-count="20">
 <circle class="pt" r="3" style="offset-path: path('{{p.d}}'); fill: {{p.color}}; opacity: {{p.op}}; animation-duration: {{p.dur}}; animation-delay: {{p.delay}}"></circle>
-</sc-for>
+</template>
 </svg>
-<sc-for list="{{iClusters}}" as="c" hint-placeholder-count="7">
+<template data-sc="for" list="{{iClusters}}" as="c" hint-placeholder-count="7">
 <button type="button" onClick="{{c.pick}}" title="Acercarte a {{c.title}}" style="position: absolute; left: {{c.tl}}; top: {{c.tt}}; transform: translateY(-50%); padding: 3px 8px; border-radius: 6px; border: 0; background: {{c.tagBg}}; color: {{c.color}}; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; opacity: {{c.op}}">{{c.title}} ⤢</button>
-</sc-for>
-<sc-for list="{{iNodes}}" as="n" hint-placeholder-count="30">
-<button type="button" onClick="{{n.pick}}" aria-pressed="{{n.pressed}}" style="position: absolute; left: {{n.l}}; top: {{n.t}}; width: {{n.w}}; transform: translate(-50%, -50%); box-sizing: border-box; padding: 5px 6px 5px; border-radius: 7px; border: 1px solid {{n.border}}; border-top: 3px solid {{n.top}}; background: {{n.bg}}; color: {{n.fg}}; opacity: {{n.op}}; box-shadow: {{n.shadow}}; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: opacity .4s, box-shadow .4s"><span style="font-size: 10.5px; font-weight: 500; line-height: 1.2; text-align: center">{{n.label}}</span><span style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px; min-height: 8px"><sc-for list="{{n.dots}}" as="d" hint-placeholder-count="3"><span style="width: 7px; height: 7px; border-radius: 50%; background: {{d.color}}; box-shadow: 0 0 0 1.5px {{d.ring}}; display: inline-block"></span></sc-for><span style="font-size: 9px; color: {{n.cntColor}}; margin-left: 2px">{{n.cnt}}</span></span></button>
-</sc-for>
+</template>
+<template data-sc="for" list="{{iNodes}}" as="n" hint-placeholder-count="30">
+<button type="button" onClick="{{n.pick}}" aria-pressed="{{n.pressed}}" style="position: absolute; left: {{n.l}}; top: {{n.t}}; width: {{n.w}}; transform: translate(-50%, -50%); box-sizing: border-box; padding: 5px 6px 5px; border-radius: 7px; border: 1px solid {{n.border}}; border-top: 3px solid {{n.top}}; background: {{n.bg}}; color: {{n.fg}}; opacity: {{n.op}}; box-shadow: {{n.shadow}}; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: opacity .4s, box-shadow .4s"><span style="font-size: 10.5px; font-weight: 500; line-height: 1.2; text-align: center">{{n.label}}</span><span style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px; min-height: 8px"><template data-sc="for" list="{{n.dots}}" as="d" hint-placeholder-count="3"><span style="width: 7px; height: 7px; border-radius: 50%; background: {{d.color}}; box-shadow: 0 0 0 1.5px {{d.ring}}; display: inline-block"></span></template><span style="font-size: 9px; color: {{n.cntColor}}; margin-left: 2px">{{n.cnt}}</span></span></button>
+</template>
 </div>
 <div style="position: absolute; left: 12px; top: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
 <button type="button" onClick="{{backNet}}" style="min-height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid #2E5A7A; background: rgba(10,15,20,0.9); color: #CFE8FB; font-size: 12px; font-weight: 600">← Volver a la vista inicial</button>
 <span style="padding: 6px 10px; border-radius: 8px; background: rgba(10,15,20,0.85); border: 1px solid #22303F; font-size: 12px; color: #9AA5B4">Red de la organización › <b style="color: #2FB36B">Capa X · OLO</b>{{inCrumb}}</span>
-<sc-if value="{{hasInCl}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{showAllCx}}" style="min-height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid #2A3442; background: rgba(10,15,20,0.9); font-size: 12px">Ver toda la Capa X</button></sc-if>
+<template data-sc="if" value="{{hasInCl}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{showAllCx}}" style="min-height: 34px; padding: 0 12px; border-radius: 8px; border: 1px solid #2A3442; background: rgba(10,15,20,0.9); font-size: 12px">Ver toda la Capa X</button></template>
 </div>
 <div style="position: absolute; right: 12px; bottom: 12px; width: 300px; max-width: 45%; box-sizing: border-box; padding: 12px 14px; border-radius: 10px; background: rgba(10,15,20,0.92); border: 1px solid #22303F; display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: {{inCard.color}}">{{inCard.kicker}}</span>
 <b style="font-size: 14px; line-height: 1.3">{{inCard.title}}</b>
 <span style="font-size: 12px; line-height: 1.45; color: #CBD5E1">{{inCard.text}}</span>
 <div style="display: flex; flex-wrap: wrap; gap: 4px">
-<sc-for list="{{inCard.chips}}" as="c" hint-placeholder-count="3">
+<template data-sc="for" list="{{inCard.chips}}" as="c" hint-placeholder-count="3">
 <button type="button" onClick="{{c.pick}}" title="{{c.name}}" style="min-height: 28px; display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 14px; border: 1px solid #2A3442; background: transparent; font-size: 11px"><span style="width: 8px; height: 8px; border-radius: 50%; background: {{c.color}}; display: inline-block"></span>{{c.id}}</button>
-</sc-for>
+</template>
 </div>
 </div>
 </div>
-<sc-if value="{{hasCaption}}" hint-placeholder-val="{{ true }}">
+<template data-sc="if" value="{{hasCaption}}" hint-placeholder-val="{{ true }}">
 <div style="position: absolute; left: 16px; right: 16px; bottom: 12px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(10,15,20,0.88); border: 1px solid #22303F; font-size: 13px; color: #E6EAF0; pointer-events: none"><span style="width: 8px; height: 8px; border-radius: 50%; background: #00AEEF; box-shadow: 0 0 8px #00AEEF; flex: 0 0 auto"></span><span>{{caption}}</span></div>
-</sc-if>
+</template>
 </div>
 </div>
 
 <aside aria-label="Explicación" style="flex: 1 1 320px; box-sizing: border-box; padding: 18px; border: 1px solid #222C38; border-radius: 14px; background: #121820; display: flex; flex-direction: column; gap: 14px">
-<sc-if value="{{pnGuide}}" hint-placeholder-val="{{ true }}">
+<template data-sc="if" value="{{pnGuide}}" hint-placeholder-val="{{ true }}">
 <div style="display: flex; flex-direction: column; gap: 14px">
 <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #00AEEF">Guía rápida</span>
 <b style="font-size: 18px">Cómo leer este mapa</b>
@@ -252,72 +252,72 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 </div>
 <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #9AA5B4">Identidad de colores</span>
 <div style="display: flex; flex-wrap: wrap; gap: 6px">
-<sc-for list="{{idChips}}" as="c" hint-placeholder-count="10">
+<template data-sc="for" list="{{idChips}}" as="c" hint-placeholder-count="10">
 <span style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 12px; border: 1px solid #2A3442; font-size: 12px"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{c.color}}; display: inline-block"></span>{{c.label}}</span>
-</sc-for>
+</template>
 </div>
 <span style="font-size: 12px; color: #9AA5B4; line-height: 1.5">En cada agente, el relleno es el color de su compañía y el anillo es su nivel de riesgo (R1 a R4, ver menú lateral).</span>
 </div>
-</sc-if>
-<sc-if value="{{pnInfo}}" hint-placeholder-val="{{ false }}">
+</template>
+<template data-sc="if" value="{{pnInfo}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 14px">
 <span style="display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #9AA5B4"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{pn.color}}; box-shadow: 0 0 8px {{pn.color}}; display: inline-block"></span>{{pn.kicker}}</span>
 <b style="font-size: 20px; line-height: 1.25">{{pn.title}}</b>
 <p style="margin: 0; font-size: 14px; line-height: 1.55; color: #CBD5E1">{{pn.text}}</p>
 <div style="display: flex; flex-direction: column; gap: 10px">
-<sc-for list="{{pn.rows}}" as="r" hint-placeholder-count="4">
+<template data-sc="for" list="{{pn.rows}}" as="r" hint-placeholder-count="4">
 <div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 8px; border-bottom: 1px solid #222C38"><span style="font-size: 11px; color: #9AA5B4">{{r.k}}</span><span style="font-size: 13px; line-height: 1.45">{{r.v}}</span></div>
-</sc-for>
+</template>
 </div>
-<sc-if value="{{pn.hasChips}}" hint-placeholder-val="{{ true }}">
+<template data-sc="if" value="{{pn.hasChips}}" hint-placeholder-val="{{ true }}">
 <div style="display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 11px; color: #9AA5B4">Agentes · clic para ver su perímetro</span>
 <div style="display: flex; flex-wrap: wrap; gap: 6px">
-<sc-for list="{{pn.chips}}" as="c" hint-placeholder-count="4">
+<template data-sc="for" list="{{pn.chips}}" as="c" hint-placeholder-count="4">
 <button type="button" onClick="{{c.pick}}" title="{{c.name}}" style="min-height: 32px; display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 16px; border: 1px solid #2A3442; background: transparent; font-size: 12px"><span style="width: 10px; height: 10px; border-radius: 50%; background: {{c.color}}; display: inline-block"></span>{{c.id}} · {{c.name}}</button>
-</sc-for>
+</template>
 </div>
 </div>
-</sc-if>
+</template>
 <div style="display: flex; flex-wrap: wrap; gap: 8px">
-<sc-if value="{{pn.hasEnter}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{pn.enter}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 0; background: #2FB36B; color: #04120A; font-weight: 600">Entrar a la Capa X de OLO</button></sc-if>
-<sc-if value="{{pn.hasFicha}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{pn.goFicha}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 0; background: #00AEEF; color: #04121C; font-weight: 600">Ver ficha completa</button></sc-if>
-<sc-if value="{{pn.hasCen}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{pn.demo}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 0; background: #E5484D; color: #1A0507; font-weight: 600">{{pn.demoLabel}}</button><button type="button" onClick="{{pn.goCen}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1px solid #E5484D; background: transparent; color: #F2A3A5">Abrir simulación</button></sc-if>
+<template data-sc="if" value="{{pn.hasEnter}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{pn.enter}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 0; background: #2FB36B; color: #04120A; font-weight: 600">Entrar a la Capa X de OLO</button></template>
+<template data-sc="if" value="{{pn.hasFicha}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{pn.goFicha}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 0; background: #00AEEF; color: #04121C; font-weight: 600">Ver ficha completa</button></template>
+<template data-sc="if" value="{{pn.hasCen}}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{pn.demo}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 0; background: #E5484D; color: #1A0507; font-weight: 600">{{pn.demoLabel}}</button><button type="button" onClick="{{pn.goCen}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1px solid #E5484D; background: transparent; color: #F2A3A5">Abrir simulación</button></template>
 <button type="button" onClick="{{resetView}}" style="min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1px solid #2A3442; background: transparent">Volver a la red completa</button>
 </div>
 </div>
-</sc-if>
+</template>
 </aside>
 </div>
 
-<sc-if value="{{hasBottom}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{hasBottom}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 8px">
 <h2 style="margin: 0; font-size: 15px; font-weight: 600">Detalle técnico · {{bottomTitle}}</h2>
 <div class="box"><table class="tbl">
 <thead><tr><th>ID</th><th>Agente</th><th>Riesgo</th><th>Compañía</th><th>Ambiente</th><th>Rol</th><th>Componente</th><th>Zona Capa X</th><th>Tipo de zona</th><th>Datos</th></tr></thead>
 <tbody>
-<sc-for list="{{bottomRows}}" as="r" hint-placeholder-count="5">
+<template data-sc="for" list="{{bottomRows}}" as="r" hint-placeholder-count="5">
 <tr><td style="font-family: 'IBM Plex Mono', monospace; color: #9AA5B4">{{r.id}}</td><td style="font-weight: 500">{{r.name}}</td><td><span style="padding: 2px 7px; border-radius: 4px; background: {{r.color}}; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600">{{r.risk}}</span></td><td>{{r.co}}</td><td>{{r.env}}</td><td style="color: {{r.roleColor}}; font-weight: 600">{{r.role}}</td><td>{{r.comp}}</td><td>{{r.zone}}</td><td>{{r.ztype}}</td><td class="wrap" style="color: #B8C4D2">{{r.data}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 </div>
-</sc-if>
+</template>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{isAgentes}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{isAgentes}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 14px">
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px"><div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 22px; font-weight: 600">Catálogo de agentes IA</h1><span style="font-size: 13px; color: #9AA5B4">Todos los agentes creados, agrupados por compañía. Usá el switch de Organización para filtrar. Clic en un agente para ver su ficha.</span></div><button type="button" style="min-height: 40px; padding: 0 16px; border-radius: 8px; border: 0; background: #7CC4FA; color: #0B1620; font-weight: 600">Registrar agente</button></div>
 <div class="box"><table class="tbl">
 <thead><tr><th>ID</th><th>Agente</th><th>Código</th><th>Riesgo</th><th>Etapa</th><th>Dueño</th><th>Compañía</th><th>Ambiente</th><th>Vive en</th><th>Zona Capa X</th><th>Alcance de datos</th><th>Tipo</th><th>Modelo IA</th><th>Orquestador</th><th>En prod desde</th><th>Quién más lo usa</th></tr></thead>
 <tbody>
-<sc-for list="{{catRows}}" as="r" hint-placeholder-count="10">
-<tr class="{{r.cls}}"><td style="font-family: 'IBM Plex Mono', monospace; color: #9AA5B4">{{r.id}}</td><td><sc-if value="{{r.isAg}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.pick}}" style="padding: 0; border: 0; background: transparent; color: #7CC4FA; font-weight: 500; text-decoration: underline; text-underline-offset: 3px">{{r.name}}</button></sc-if><sc-if value="{{r.isHead}}" hint-placeholder-val="{{ false }}"><span>{{r.name}}</span></sc-if></td><td style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">{{r.code}}</td><td><span style="padding: 2px 7px; border-radius: 4px; background: {{r.color}}; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600">{{r.risk}}</span></td><td>{{r.gate}}</td><td>{{r.owner}}</td><td>{{r.co}}</td><td>{{r.env}}</td><td>{{r.lives}}</td><td>{{r.zone}}</td><td>{{r.scope}}</td><td>{{r.stype}}</td><td>{{r.model}}</td><td>{{r.orch}}</td><td>{{r.since}}</td><td>{{r.top}}</td></tr>
-</sc-for>
+<template data-sc="for" list="{{catRows}}" as="r" hint-placeholder-count="10">
+<tr class="{{r.cls}}"><td style="font-family: 'IBM Plex Mono', monospace; color: #9AA5B4">{{r.id}}</td><td><template data-sc="if" value="{{r.isAg}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.pick}}" style="padding: 0; border: 0; background: transparent; color: #7CC4FA; font-weight: 500; text-decoration: underline; text-underline-offset: 3px">{{r.name}}</button></template><template data-sc="if" value="{{r.isHead}}" hint-placeholder-val="{{ false }}"><span>{{r.name}}</span></template></td><td style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">{{r.code}}</td><td><span style="padding: 2px 7px; border-radius: 4px; background: {{r.color}}; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600">{{r.risk}}</span></td><td>{{r.gate}}</td><td>{{r.owner}}</td><td>{{r.co}}</td><td>{{r.env}}</td><td>{{r.lives}}</td><td>{{r.zone}}</td><td>{{r.scope}}</td><td>{{r.stype}}</td><td>{{r.model}}</td><td>{{r.orch}}</td><td>{{r.since}}</td><td>{{r.top}}</td></tr>
+</template>
 </tbody>
 </table></div>
-<sc-if value="{{hasFicha}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{hasFicha}}" hint-placeholder-val="{{ false }}">
 <div style="position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box">
 <button type="button" onClick="{{closeFicha}}" aria-label="Cerrar ficha" style="position: absolute; inset: 0; border: 0; padding: 0; background: rgba(4,8,12,0.72); cursor: default"></button>
 <div role="dialog" aria-modal="true" aria-label="Ficha del agente" class="modal" style="position: relative; width: 100%; max-width: 920px; max-height: 88vh; display: flex; flex-direction: column; border-radius: 14px; border: 1px solid #2A3442; background: #121820; box-shadow: 0 24px 60px rgba(0,0,0,0.55); overflow: hidden">
@@ -330,114 +330,114 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <button type="button" onClick="{{closeFicha}}" aria-label="Cerrar" style="flex: 0 0 auto; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid #2A3442; background: transparent"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" style="fill: none; stroke: #CBD5E1; stroke-width: 1.8; stroke-linecap: round"><path d="M2 2 L12 12 M12 2 L2 12"></path></svg></button>
 </div>
 <div role="tablist" aria-label="Secciones de la ficha" style="display: flex; flex-wrap: wrap; gap: 2px; padding: 0 14px; border-bottom: 1px solid #222C38">
-<sc-for list="{{fiTabs}}" as="t" hint-placeholder-count="5">
+<template data-sc="for" list="{{fiTabs}}" as="t" hint-placeholder-count="5">
 <button type="button" role="tab" onClick="{{t.pick}}" aria-selected="{{t.pressed}}" style="min-height: 38px; padding: 0 12px; border: 0; border-bottom: 2px solid {{t.border}}; background: transparent; color: {{t.fg}}; font-size: 13px; font-weight: 500">{{t.label}}</button>
-</sc-for>
+</template>
 </div>
 <div style="flex: 1 1 auto; overflow: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 16px">
 
-<sc-if value="{{tabResumen}}" hint-placeholder-val="{{ true }}">
+<template data-sc="if" value="{{tabResumen}}" hint-placeholder-val="{{ true }}">
 <div style="display: flex; flex-direction: column; gap: 16px">
-<sc-if value="{{fiHasOpen}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{fiHasOpen}}" hint-placeholder-val="{{ false }}">
 <div style="padding: 12px 14px; border-radius: 10px; border: 1px solid #6B5A1E; background: #241F0F; display: flex; flex-direction: column; gap: 6px"><b style="font-size: 13px; color: #F5D76E">Para cerrar con el dueño</b>
-<sc-for list="{{fiOpen}}" as="o" hint-placeholder-count="3"><span style="font-size: 12.5px; line-height: 1.45; color: #E8DDB5">· {{o.t}}</span></sc-for>
+<template data-sc="for" list="{{fiOpen}}" as="o" hint-placeholder-count="3"><span style="font-size: 12.5px; line-height: 1.45; color: #E8DDB5">· {{o.t}}</span></template>
 </div>
-</sc-if>
+</template>
 <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #9AA5B4">Anatomía del agente · qué hace, en lenguaje del negocio</span>
 <div class="anat">
 <div style="padding: 12px; border-radius: 10px; border: 1px solid #2A3442; border-top: 3px solid #7CC4FA; background: #0F1720; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 10.5px; letter-spacing: .08em; color: #7CC4FA; font-weight: 700">ENTRADA</span><b style="font-size: 13px">{{fx.act}}</b><span style="font-size: 12px; color: #B8C4D2; line-height: 1.45">Recibe: {{fx.recibe}}</span></div>
 <svg class="anarr" width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" style="align-self: center; fill: none; stroke: #4A5A70; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M1 7 H19 M14 2 L19 7 L14 12"></path></svg>
 <div style="padding: 12px; border-radius: 10px; border: 2px solid {{fiColor}}; background: #13202D; display: flex; flex-direction: column; gap: 8px"><span style="font-size: 10.5px; letter-spacing: .08em; color: {{fiColor}}; font-weight: 700">AGENTE</span><span style="font-size: 13px; line-height: 1.45">{{fx.desc}}</span><span style="font-size: 12px; line-height: 1.45; color: #F7B98A"><b>Nunca:</b> {{fx.never}}</span><span style="font-size: 12px; line-height: 1.45; color: #9FE3BC"><b>Una persona aprueba:</b> {{fx.approve}}</span></div>
 <svg class="anarr" width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" style="align-self: center; fill: none; stroke: #4A5A70; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M1 7 H19 M14 2 L19 7 L14 12"></path></svg>
-<div style="padding: 12px; border-radius: 10px; border: 1px solid #2A3442; border-top: 3px solid #5BE49B; background: #0F1720; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 10.5px; letter-spacing: .08em; color: #5BE49B; font-weight: 700">SALIDA</span><b style="font-size: 13px">{{fx.entrega}}</b><div style="display: flex; flex-wrap: wrap; gap: 4px"><sc-for list="{{fx.res}}" as="r" hint-placeholder-count="3"><span style="padding: 2px 8px; border-radius: 10px; border: 1px solid #2A3442; font-size: 11px">{{r.t}}</span></sc-for></div><span style="font-size: 12px; color: #B8C4D2">Destino: {{fx.dest}}</span></div>
+<div style="padding: 12px; border-radius: 10px; border: 1px solid #2A3442; border-top: 3px solid #5BE49B; background: #0F1720; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 10.5px; letter-spacing: .08em; color: #5BE49B; font-weight: 700">SALIDA</span><b style="font-size: 13px">{{fx.entrega}}</b><div style="display: flex; flex-wrap: wrap; gap: 4px"><template data-sc="for" list="{{fx.res}}" as="r" hint-placeholder-count="3"><span style="padding: 2px 8px; border-radius: 10px; border: 1px solid #2A3442; font-size: 11px">{{r.t}}</span></template></div><span style="font-size: 12px; color: #B8C4D2">Destino: {{fx.dest}}</span></div>
 </div>
 <div style="display: flex; flex-direction: column; gap: 6px">
 <span style="font-size: 11px; color: #9AA5B4">Herramientas del catálogo · cada una marcada como Lee o Escribe</span>
 <div style="display: flex; flex-wrap: wrap; gap: 6px">
-<sc-for list="{{fx.tools}}" as="t" hint-placeholder-count="3">
+<template data-sc="for" list="{{fx.tools}}" as="t" hint-placeholder-count="3">
 <span style="display: inline-flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 8px; border: 1px solid #2A3442; background: #0F1720; font-size: 12px"><span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4">{{t.code}}</span>{{t.name}}<span style="padding: 1px 6px; border-radius: 4px; background: {{t.bg}}; color: #0B1620; font-size: 10.5px; font-weight: 700">{{t.uso}}</span><span style="font-size: 11px; color: #F5D76E">{{t.st}}</span></span>
-</sc-for>
+</template>
 </div>
 </div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px">
 <div style="padding: 12px 14px; border-radius: 10px; border: 1px solid #222C38; display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #9AA5B4">Riesgo en 5 preguntas</span>
-<sc-for list="{{fx.risk}}" as="q" hint-placeholder-count="5">
-<div style="display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center"><span style="font-size: 12px; font-weight: 600">{{q.q}}</span><span style="display: flex; gap: 3px"><sc-for list="{{q.dots}}" as="d" hint-placeholder-count="4"><span style="width: 14px; height: 6px; border-radius: 3px; background: {{d.bg}}; display: inline-block"></span></sc-for></span><span style="grid-column: 1 / -1; font-size: 11.5px; color: #9AA5B4">{{q.v}} · {{q.a}}</span></div>
-</sc-for>
+<template data-sc="for" list="{{fx.risk}}" as="q" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center"><span style="font-size: 12px; font-weight: 600">{{q.q}}</span><span style="display: flex; gap: 3px"><template data-sc="for" list="{{q.dots}}" as="d" hint-placeholder-count="4"><span style="width: 14px; height: 6px; border-radius: 3px; background: {{d.bg}}; display: inline-block"></span></template></span><span style="grid-column: 1 / -1; font-size: 11.5px; color: #9AA5B4">{{q.v}} · {{q.a}}</span></div>
+</template>
 <span style="padding-top: 6px; border-top: 1px solid #222C38; font-size: 12.5px; line-height: 1.45">{{fx.riskTxt}}</span>
 </div>
 <div style="padding: 12px 14px; border-radius: 10px; border: 1px solid #222C38; display: flex; flex-direction: column; gap: 10px">
 <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #9AA5B4">¿En qué etapa está?</span>
 <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px">
-<sc-for list="{{fx.steps}}" as="s" hint-placeholder-count="4"><span style="padding: 6px 4px; border-radius: 6px; border: 1px solid {{s.border}}; background: {{s.bg}}; color: {{s.fg}}; font-size: 10.5px; text-align: center; line-height: 1.25">{{s.label}}</span></sc-for>
+<template data-sc="for" list="{{fx.steps}}" as="s" hint-placeholder-count="4"><span style="padding: 6px 4px; border-radius: 6px; border: 1px solid {{s.border}}; background: {{s.bg}}; color: {{s.fg}}; font-size: 10.5px; text-align: center; line-height: 1.25">{{s.label}}</span></template>
 </div>
 <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #9AA5B4">Las 5 reglas · {{fx.rulesTxt}}</span>
-<sc-for list="{{fx.rules}}" as="r" hint-placeholder-count="5">
+<template data-sc="for" list="{{fx.rules}}" as="r" hint-placeholder-count="5">
 <div style="display: flex; gap: 8px; align-items: flex-start; font-size: 12px; line-height: 1.4"><b style="width: 14px; flex: 0 0 auto; color: {{r.color}}">{{r.mark}}</b><span><b>{{r.label}}</b> <span style="color: #9AA5B4">· {{r.note}}</span></span></div>
-</sc-for>
+</template>
 </div>
 </div>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{tabTda}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{tabTda}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 12px">
 <span style="font-size: 12.5px; color: #9AA5B4; line-height: 1.5">Tarjeta de Definición del Agente: una página, siete secciones, en lenguaje del negocio. La escribe el área dueña y es lo que recibe la fábrica de agentes.</span>
 <div class="box"><table class="tbl cmp">
 <tbody>
-<sc-for list="{{fx.tda}}" as="r" hint-placeholder-count="7">
+<template data-sc="for" list="{{fx.tda}}" as="r" hint-placeholder-count="7">
 <tr><td style="width: 30px; font-family: 'IBM Plex Mono', monospace; color: #00AEEF">{{r.n}}</td><td style="width: 180px; font-weight: 600">{{r.k}}</td><td style="white-space: normal; line-height: 1.5">{{r.v}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #9AA5B4">TDA.md · vista para el equipo técnico</span>
 <pre style="margin: 0; padding: 12px 14px; border-radius: 10px; border: 1px solid #222C38; background: #0B1015; color: #CBD5E1; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; line-height: 1.55; white-space: pre-wrap; overflow-x: auto">{{fx.md}}</pre>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{tabTec}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{tabTec}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 12px">
 <span style="font-size: 12.5px; color: #9AA5B4; line-height: 1.5">Ficha técnica · la completa Tecnología. El nivel de riesgo fija el perfil mínimo obligatorio; cada fila compara lo exigido con lo que tiene este agente. {{fx.gapTxt}}</span>
 <div class="box"><table class="tbl cmp">
 <tbody>
-<sc-for list="{{fx.tecF}}" as="r" hint-placeholder-count="5">
+<template data-sc="for" list="{{fx.tecF}}" as="r" hint-placeholder-count="5">
 <tr><td style="width: 34%; color: #9AA5B4">{{r.k}}</td><td style="white-space: normal">{{r.v}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 <div class="box"><table class="tbl cmp">
 <thead><tr><th>Control</th><th>Exigido para {{fiRisk}}</th><th>Este agente</th><th>Estado</th></tr></thead>
 <tbody>
-<sc-for list="{{fx.checks}}" as="c" hint-placeholder-count="11">
+<template data-sc="for" list="{{fx.checks}}" as="c" hint-placeholder-count="11">
 <tr><td style="font-weight: 500">{{c.ctl}}</td><td style="white-space: normal; color: #B8C4D2">{{c.req}}</td><td style="white-space: normal">{{c.cur}}</td><td style="color: {{c.stc}}; font-weight: 600">{{c.st}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{tabGob}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{tabGob}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 12px">
 <div class="box"><table class="tbl cmp">
 <tbody>
-<sc-for list="{{fx.gob}}" as="r" hint-placeholder-count="12">
+<template data-sc="for" list="{{fx.gob}}" as="r" hint-placeholder-count="12">
 <tr class="{{r.cls}}"><td style="width: 34%; color: {{r.kc}}">{{r.k}}</td><td style="white-space: normal; color: {{r.vc}}">{{r.v}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{tabUso}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{tabUso}}" hint-placeholder-val="{{ false }}">
 <div class="box"><table class="tbl cmp">
 <tbody>
-<sc-for list="{{fiRows}}" as="f" hint-placeholder-count="16">
+<template data-sc="for" list="{{fiRows}}" as="f" hint-placeholder-count="16">
 <tr class="{{f.cls}}"><td style="color: {{f.kc}}; width: 34%">{{f.k}}</td><td style="color: {{f.vc}}; white-space: normal">{{f.v}}</td><td style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #9AA5B4; white-space: normal; text-align: right">{{f.f}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
-</sc-if>
+</template>
 
 </div>
 <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; padding: 12px 18px; border-top: 1px solid #222C38">
@@ -446,47 +446,47 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 </div>
 </div>
 </div>
-</sc-if>
+</template>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{isGob}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{isGob}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 14px">
 <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 22px; font-weight: 600">Gobierno · tablero del Comité</h1><span style="font-size: 13px; color: #9AA5B4; line-height: 1.5">Una sola vista para la reunión mensual: agentes por nivel, revisiones vencidas, brechas, incidentes y costo contra valor. Clic en un agente para abrir su ficha en la pestaña Gobierno.</span></div>
 <div class="box"><table class="tbl">
 <thead><tr><th>Indicador</th><th class="num">Valor</th><th>Qué significa</th></tr></thead>
 <tbody>
-<sc-for list="{{govSum}}" as="r" hint-placeholder-count="8">
+<template data-sc="for" list="{{govSum}}" as="r" hint-placeholder-count="8">
 <tr><td style="font-weight: 500">{{r.k}}</td><td class="num" style="color: {{r.vc}}">{{r.v}}</td><td style="white-space: normal; color: #B8C4D2">{{r.f}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 <div class="box"><table class="tbl">
 <thead><tr><th>ID</th><th>Agente</th><th>Código</th><th>Nivel</th><th>Compuerta</th><th>Dueño</th><th>Custodio</th><th>Aprobador</th><th>Revisión</th><th>Próxima</th><th>Estado revisión</th><th class="num">Reglas</th><th class="num">Brechas</th><th>Trifecta</th><th class="num">Incidentes</th><th class="num">Costo / mes</th><th class="num">Valor / mes</th><th class="num">ROI</th></tr></thead>
 <tbody>
-<sc-for list="{{govRows}}" as="r" hint-placeholder-count="10">
-<tr class="{{r.cls}}"><td style="font-family: 'IBM Plex Mono', monospace; color: #9AA5B4">{{r.id}}</td><td><sc-if value="{{r.isAg}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.pick}}" style="padding: 0; border: 0; background: transparent; color: #7CC4FA; font-weight: 500; text-decoration: underline; text-underline-offset: 3px">{{r.name}}</button></sc-if><sc-if value="{{r.isHead}}" hint-placeholder-val="{{ false }}"><span>{{r.name}}</span></sc-if></td><td style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">{{r.code}}</td><td>{{r.lvl}}</td><td>{{r.gate}}</td><td>{{r.owner}}</td><td>{{r.cust}}</td><td>{{r.aprob}}</td><td>{{r.freq}}</td><td>{{r.next}}</td><td style="color: {{r.revC}}; font-weight: 600">{{r.rev}}</td><td class="num" style="color: {{r.rulesC}}">{{r.rules}}</td><td class="num" style="color: {{r.gapsC}}">{{r.gaps}}</td><td style="color: {{r.triC}}">{{r.tri}}</td><td class="num">{{r.inc}}</td><td class="num">{{r.spend}}</td><td class="num">{{r.ben}}</td><td class="num" style="color: #7CC4FA">{{r.roi}}</td></tr>
-</sc-for>
+<template data-sc="for" list="{{govRows}}" as="r" hint-placeholder-count="10">
+<tr class="{{r.cls}}"><td style="font-family: 'IBM Plex Mono', monospace; color: #9AA5B4">{{r.id}}</td><td><template data-sc="if" value="{{r.isAg}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.pick}}" style="padding: 0; border: 0; background: transparent; color: #7CC4FA; font-weight: 500; text-decoration: underline; text-underline-offset: 3px">{{r.name}}</button></template><template data-sc="if" value="{{r.isHead}}" hint-placeholder-val="{{ false }}"><span>{{r.name}}</span></template></td><td style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">{{r.code}}</td><td>{{r.lvl}}</td><td>{{r.gate}}</td><td>{{r.owner}}</td><td>{{r.cust}}</td><td>{{r.aprob}}</td><td>{{r.freq}}</td><td>{{r.next}}</td><td style="color: {{r.revC}}; font-weight: 600">{{r.rev}}</td><td class="num" style="color: {{r.rulesC}}">{{r.rules}}</td><td class="num" style="color: {{r.gapsC}}">{{r.gaps}}</td><td style="color: {{r.triC}}">{{r.tri}}</td><td class="num">{{r.inc}}</td><td class="num">{{r.spend}}</td><td class="num">{{r.ben}}</td><td class="num" style="color: #7CC4FA">{{r.roi}}</td></tr>
+</template>
 </tbody>
 </table></div>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{isTools}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{isTools}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 14px">
 <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 22px; font-weight: 600">Catálogo de herramientas</h1><span style="font-size: 13px; color: #9AA5B4; line-height: 1.5">Herramientas reutilizables (TL-…) que usan los agentes, agrupadas por sistema. Un agente solo puede usar herramientas de este catálogo.</span></div>
 <div class="box"><table class="tbl">
 <thead><tr><th>Código</th><th>Herramienta</th><th>Sistema</th><th>Zona Capa X</th><th>Uso</th><th class="num">Agentes</th><th>Quién la usa</th><th>Estado</th></tr></thead>
 <tbody>
-<sc-for list="{{toolRows}}" as="r" hint-placeholder-count="12">
+<template data-sc="for" list="{{toolRows}}" as="r" hint-placeholder-count="12">
 <tr class="{{r.cls}}"><td style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">{{r.code}}</td><td style="font-weight: 500">{{r.name}}</td><td>{{r.sys}}</td><td>{{r.zone}}</td><td>{{r.uso}}</td><td class="num">{{r.n}}</td><td style="white-space: normal; min-width: 220px; color: #B8C4D2">{{r.ags}}</td><td style="color: {{r.stc}}">{{r.st}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{isMarco}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{isMarco}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 22px">
 <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #00AEEF">Marco de Recursos Agénticos · v0.2 borrador</span><h1 style="margin: 0; font-size: 24px; font-weight: 600; line-height: 1.3">Las áreas definen qué debe hacer el agente; Tecnología define cómo corre y cómo se protege.</h1><span style="font-size: 14px; color: #B8C4D2; line-height: 1.55">Cada agente se gestiona como un colaborador: tiene descripción de cargo, carnet y accesos, un supervisor, se evalúa, cuesta dinero y un día se da de baja. Ningún agente se construye sin las dos capas.</span></div>
 
@@ -511,14 +511,14 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <span style="font-size: 13px; color: #9AA5B4; line-height: 1.5">Elegí una respuesta por pregunta y el nivel sale solo. Suma 5–8 R1 · 9–12 R2 · 13–16 R3 · 17–20 R4. Cualquier respuesta en 4 lleva a R3 como mínimo; escribir en producción de forma autónoma o mover dinero o datos en masa es siempre R4.</span>
 <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start">
 <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 10px">
-<sc-for list="{{calcQ}}" as="q" hint-placeholder-count="5">
+<template data-sc="for" list="{{calcQ}}" as="q" hint-placeholder-count="5">
 <div style="display: flex; flex-direction: column; gap: 6px"><b style="font-size: 13px">{{q.n}} · {{q.q}}</b>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 6px">
-<sc-for list="{{q.opts}}" as="o" hint-placeholder-count="4">
+<template data-sc="for" list="{{q.opts}}" as="o" hint-placeholder-count="4">
 <button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="min-height: 44px; display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 8px; border: 1px solid {{o.border}}; background: {{o.bg}}; text-align: left; font-size: 12px; line-height: 1.3"><span style="font-family: 'IBM Plex Mono', monospace; color: #00AEEF">{{o.v}}</span>{{o.label}}</button>
-</sc-for>
+</template>
 </div></div>
-</sc-for>
+</template>
 </div>
 <div style="flex: 1 1 280px; padding: 16px; border-radius: 12px; border: 2px solid {{calc.color}}; background: #121820; display: flex; flex-direction: column; gap: 8px">
 <span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #9AA5B4">Resultado</span>
@@ -536,9 +536,9 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <div class="box"><table class="tbl">
 <thead><tr><th>Control</th><th style="background: {{perfH.b1}}">R1 · Bajo</th><th style="background: {{perfH.b2}}">R2 · Medio</th><th style="background: {{perfH.b3}}">R3 · Alto</th><th style="background: {{perfH.b4}}">R4 · Crítico</th></tr></thead>
 <tbody>
-<sc-for list="{{perf}}" as="r" hint-placeholder-count="12">
+<template data-sc="for" list="{{perf}}" as="r" hint-placeholder-count="12">
 <tr><td style="font-weight: 500">{{r.k}}</td><td style="white-space: normal; background: {{r.b1}}">{{r.c1}}</td><td style="white-space: normal; background: {{r.b2}}">{{r.c2}}</td><td style="white-space: normal; background: {{r.b3}}">{{r.c3}}</td><td style="white-space: normal; background: {{r.b4}}">{{r.c4}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 </div>
@@ -576,31 +576,31 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <span style="font-size: 12px; color: #9AA5B4">Fuente: Marco de Trabajo de Recursos Agénticos v0.2 (borrador, 07/10/2026) · Grupo Mayoreo · Gerencia Corporativa de Tecnología. Propuesta para discusión.</span>
 </div>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{isMetricas}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{isMetricas}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 14px">
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
 <div style="display: flex; flex-direction: column; gap: 4px"><h1 style="margin: 0; font-size: 22px; font-weight: 600">Métricas · tabla única</h1><span style="font-size: 13px; color: #9AA5B4">Beneficio = horas ahorradas × $12 · ROI = beneficio ÷ gasto · Costo por ejecución = gasto ÷ ejecuciones · * horas estimadas (QA)</span></div>
 <div role="group" aria-label="Agrupar por" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px"><span style="font-size: 12px; color: #9AA5B4; margin-right: 4px">Subtotales por</span>
 <div style="display: flex; gap: 2px; padding: 3px; border: 1px solid #2A3442; border-radius: 8px; background: #0F1419">
-<sc-for list="{{mgOpts}}" as="o" hint-placeholder-count="4">
+<template data-sc="for" list="{{mgOpts}}" as="o" hint-placeholder-count="4">
 <button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="min-height: 34px; padding: 4px 12px; border: 0; border-radius: 6px; background: {{o.bg}}; color: {{o.fg}}; font-size: 13px">{{o.label}}</button>
-</sc-for>
+</template>
 </div></div>
 </div>
 <div class="box"><table class="tbl">
 <thead><tr><th>ID</th><th>Agente</th><th>Riesgo</th><th>Compañía</th><th>Ambiente</th><th>Zona Capa X</th><th>Tipo</th><th class="num">Agentes</th><th class="num">Ejecuciones / mes</th><th class="num">Gasto / mes</th><th class="num">Costo / ejecución</th><th class="num">Horas / mes</th><th class="num">Beneficio / mes</th><th class="num">Beneficio neto</th><th class="num">ROI</th><th>Fórmula ROI</th></tr></thead>
 <tbody>
-<sc-for list="{{mRows}}" as="r" hint-placeholder-count="12">
+<template data-sc="for" list="{{mRows}}" as="r" hint-placeholder-count="12">
 <tr class="{{r.cls}}"><td style="font-family: 'IBM Plex Mono', monospace; color: #9AA5B4">{{r.id}}</td><td>{{r.name}}</td><td>{{r.risk}}</td><td>{{r.co}}</td><td>{{r.env}}</td><td>{{r.zone}}</td><td>{{r.stype}}</td><td class="num">{{r.n}}</td><td class="num">{{r.runs}}</td><td class="num">{{r.spend}}</td><td class="num">{{r.cpe}}</td><td class="num">{{r.hours}}</td><td class="num">{{r.benefit}}</td><td class="num">{{r.net}}</td><td class="num" style="color: #7CC4FA">{{r.roi}}</td><td style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #B8C4D2">{{r.f}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 </div>
-</sc-if>
+</template>
 
-<sc-if value="{{isCen}}" hint-placeholder-val="{{ false }}">
+<template data-sc="if" value="{{isCen}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; flex-direction: column; gap: 16px">
 <div style="display: flex; flex-direction: column; gap: 6px"><span style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #F2766B">Centinela de búsqueda · nuevo en v3</span><h1 style="margin: 0; font-size: 22px; font-weight: 600">Ecosistema seguro con centinela</h1><span style="font-size: 13px; color: #9AA5B4; line-height: 1.5; max-width: 900px">Un centinela escanea sin parar los escritorios que están fuera del ecosistema seguro, consulta el registro de autorizados y bloquea agentes y skills sin autorización. Lo autorizado entra solo por la puerta de 5 pasos hacia el área limitada de la Capa X.</span></div>
 
@@ -633,14 +633,14 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <line x1="518" y1="526" x2="454" y2="520" stroke="#3FBF9A" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#czar)"></line>
 </svg>
 
-<sc-for list="{{czDesks}}" as="d" hint-placeholder-count="4">
+<template data-sc="for" list="{{czDesks}}" as="d" hint-placeholder-count="4">
 <div class="czbox" style="left: 5%; top: {{d.top}}; width: 20%; height: 8.387%; border-color: {{d.bd}}; background: {{d.bg}}; color: {{d.fg}}"><span style="font-size: 13px; font-weight: 600">{{d.label}}</span><span style="font-size: 11px; opacity: .75">{{d.sub}}</span></div>
-</sc-for>
+</template>
 
 <div class="czbox" style="left: 28%; top: 20.968%; width: 17%; height: 43.548%; justify-content: flex-start; padding-top: 1.2%; border-color: #8A7535; background: #15130C; color: #E9C46A"><span style="font-size: 13px; font-weight: 600">Puerta · 5 pasos</span></div>
-<sc-for list="{{czSteps}}" as="s" hint-placeholder-count="5">
+<template data-sc="for" list="{{czSteps}}" as="s" hint-placeholder-count="5">
 <div class="czbox" style="left: 29.2%; top: {{s.top}}; width: 14.6%; height: 5.484%; flex-direction: row; gap: 6px; border-radius: 6px; border-color: {{s.bd}}; background: {{s.bg}}; color: {{s.fg}}; font-size: 12px"><span style="font-family: 'IBM Plex Mono', monospace">{{s.n}}</span><span>{{s.label}}</span></div>
-</sc-for>
+</template>
 
 <div class="czbox" style="left: 5%; top: 75.806%; width: 40%; height: 15.484%; border-width: 1.5px; border-color: #E5484D; background: {{czHot.bg}}; box-shadow: {{czHot.sh}}; color: #F2A3A5"><span style="font-size: 14px; font-weight: 600; color: #FFD3D4">Centinela de búsqueda</span><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px"><span class="czpulse" style="width: 7px; height: 7px; border-radius: 50%; background: #E5484D; display: inline-block"></span>Escaneo permanente · Bloqueados: {{czBlk}}</span></div>
 
@@ -650,7 +650,7 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <div class="czbox" style="left: 77%; top: 16.129%; width: 18%; height: 10.323%; border-color: {{czOrq.bd}}; background: {{czOrq.bg}}"><span style="font-size: 13px; font-weight: 600; color: #6EE7C8">Orquestador</span><span style="font-size: 11px; color: #B8C4D2">Entrega identidad y permisos</span></div>
 <div class="czbox" style="left: 54%; top: 38.71%; width: 19.5%; height: 31.613%; border-color: {{czAgB.bd}}; background: {{czAgB.bg}}"><span style="font-size: 14px; font-weight: 600; color: #D6CEFF">Agentes</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600">{{czAgN}}</span><span style="font-size: 11px; color: #B8C4D2">activos</span></div>
 <div class="czbox" style="left: 74.5%; top: 38.71%; width: 19.5%; height: 31.613%; border-color: {{czSkB.bd}}; background: {{czSkB.bg}}"><span style="font-size: 14px; font-weight: 600; color: #D6CEFF">Skills</span><span style="font-family: 'IBM Plex Mono', monospace; font-size: 22px; font-weight: 600">{{czSkN}}</span><span style="font-size: 11px; color: #B8C4D2">activos</span></div>
-<div class="czbox" style="left: 52%; top: 77.097%; width: 43%; height: 15.484%; border-color: {{czReg.bd}}; background: {{czReg.bg}}"><span style="font-size: 13px; font-weight: 600; color: #6EE7C8">Registro de autorizados</span><span style="font-size: 11px; color: #B8C4D2">Lo mantiene el orquestador · lo consulta el centinela</span><a href="Registro.dc.html" style="font-size: 12px; padding: 2px 6px">Ver registro →</a></div>
+<div class="czbox" style="left: 52%; top: 77.097%; width: 43%; height: 15.484%; border-color: {{czReg.bd}}; background: {{czReg.bg}}"><span style="font-size: 13px; font-weight: 600; color: #6EE7C8">Registro de autorizados</span><span style="font-size: 11px; color: #B8C4D2">Lo mantiene el orquestador · lo consulta el centinela</span><a href="registro.html" style="font-size: 12px; padding: 2px 6px">Ver registro →</a></div>
 
 <span aria-hidden="true" style="position: absolute; left: 48.2%; top: 71.774%; width: 26px; height: 26px; margin: -13px 0 0 -13px; opacity: {{czXOp}}; transition: opacity .25s"><svg viewBox="0 0 26 26" width="26" height="26" style="fill: none; stroke: #E5484D; stroke-width: 3.5; stroke-linecap: round"><path d="M5 5L21 21M21 5L5 21"></path></svg></span>
 <span aria-hidden="true" style="position: absolute; left: {{czDotL}}; top: {{czDotT}}; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: {{czDotC}}; box-shadow: 0 0 14px {{czDotC}}; opacity: {{czDotOp}}; transition: left {{czDotMs}} ease-in-out, top {{czDotMs}} ease-in-out, opacity .3s; pointer-events: none"></span>
@@ -670,10 +670,10 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <div style="display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start">
 <section style="flex: 1 1 320px; padding: 16px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 8px">
 <h2 style="margin: 0; font-size: 15px; font-weight: 600">Bitácora del centinela</h2>
-<sc-if value="{{czNoLog}}" hint-placeholder-val="{{ true }}"><span style="font-size: 13px; color: #9AA5B4">Sin eventos todavía. Usá los botones de arriba o esperá: cada tanto aparece algo no autorizado en un escritorio.</span></sc-if>
-<sc-for list="{{czLog}}" as="e" hint-placeholder-count="3">
+<template data-sc="if" value="{{czNoLog}}" hint-placeholder-val="{{ true }}"><span style="font-size: 13px; color: #9AA5B4">Sin eventos todavía. Usá los botones de arriba o esperá: cada tanto aparece algo no autorizado en un escritorio.</span></template>
+<template data-sc="for" list="{{czLog}}" as="e" hint-placeholder-count="3">
 <div style="display: flex; gap: 10px; font-size: 12.5px; line-height: 1.45; padding: 4px 0; border-bottom: 1px solid #1C2530"><span style="font-family: 'IBM Plex Mono', monospace; color: #6B7A8F">{{e.t}}</span><span style="color: {{e.c}}">{{e.m}}</span></div>
-</sc-for>
+</template>
 </section>
 <section style="flex: 2 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 8px">
 <h2 style="margin: 0; font-size: 15px; font-weight: 600">Cómo encaja con el Marco de Recursos Agénticos</h2>
@@ -695,28 +695,28 @@ a{color:#7CC4FA}a:hover{color:#B5DEFD}
 <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 10px">
 <div style="display: flex; flex-direction: column; gap: 4px"><h2 style="margin: 0; font-size: 15px; font-weight: 600">Registro de skills</h2><span style="font-size: 12.5px; color: #9AA5B4">Capacidades reutilizables que usan los agentes. Un skill solo corre en el área limitada si cruzó los 5 pasos; lo que el centinela encuentra fuera del registro queda bloqueado. Datos de ejemplo.</span></div>
 <div role="group" aria-label="Filtrar skills por estado" style="display: flex; gap: 2px; padding: 3px; border: 1px solid #2A3442; border-radius: 8px; background: #0F1419">
-<sc-for list="{{skOpts}}" as="o" hint-placeholder-count="4">
+<template data-sc="for" list="{{skOpts}}" as="o" hint-placeholder-count="4">
 <button type="button" onClick="{{o.pick}}" aria-pressed="{{o.pressed}}" style="min-height: 34px; padding: 4px 12px; border: 0; border-radius: 6px; background: {{o.bg}}; color: {{o.fg}}; font-size: 13px">{{o.label}}</button>
-</sc-for>
+</template>
 </div>
 </div>
 <div class="box"><table class="tbl">
 <thead><tr><th>ID</th><th>Skill</th><th>Compañía</th><th>Lo usan</th><th>Estado</th><th>Detalle</th><th>Riesgo</th><th>Dueño</th><th class="num">Usos / mes</th></tr></thead>
 <tbody>
-<sc-for list="{{skRows}}" as="r" hint-placeholder-count="10">
+<template data-sc="for" list="{{skRows}}" as="r" hint-placeholder-count="10">
 <tr><td style="font-family: 'IBM Plex Mono', monospace; color: #9AA5B4">{{r.id}}</td><td style="font-weight: 500">{{r.name}}</td><td>{{r.co}}</td><td style="font-family: 'IBM Plex Mono', monospace; font-size: 12px">{{r.ags}}</td><td><span style="display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 10px; border: 1px solid {{r.sc}}; color: {{r.sc}}; font-size: 12px"><span style="width: 7px; height: 7px; border-radius: 50%; background: {{r.sc}}; display: inline-block"></span>{{r.st}}</span></td><td style="white-space: normal; min-width: 220px; color: #B8C4D2">{{r.det}}</td><td><span style="padding: 2px 7px; border-radius: 4px; background: {{r.rc}}; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600">{{r.risk}}</span></td><td>{{r.owner}}</td><td class="num">{{r.uses}}</td></tr>
-</sc-for>
+</template>
 </tbody>
 </table></div>
 </section>
 </div>
-</sc-if>
+</template>
 
 </main>
 </div>
 </div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"animacion":{"editor":"boolean","default":true},"cOLO":{"editor":"color","default":"#2FB36B","section":"Identidad de compañías"},"cIntelix":{"editor":"color","default":"#00AEEF","section":"Identidad de compañías"},"cMayoreo":{"editor":"color","default":"#9AA3AD","section":"Identidad de compañías"},"cFebeca":{"editor":"color","default":"#E0359B","section":"Identidad de compañías"},"cCofersa":{"editor":"color","default":"#8ED8F8","section":"Identidad de compañías"},"cSillaca":{"editor":"color","default":"#F2A93B","section":"Identidad de compañías"},"cBeval":{"editor":"color","default":"#8B6CF0","section":"Identidad de compañías"},"cMundial":{"editor":"color","default":"#EA6A47","section":"Identidad de compañías"},"cEPA":{"editor":"color","default":"#F5C518","section":"Identidad de compañías"},"cEPACR":{"editor":"color","default":"#F5C518","section":"Identidad de compañías"},"cEPAVE":{"editor":"color","default":"#D9A21B","section":"Identidad de compañías"},"cComercializadoras":{"editor":"color","default":"#C084FC","section":"Identidad de compañías"},"cPrisma":{"editor":"color","default":"#5EEAD4","section":"Identidad de compañías"},"$preview":{"width":1440,"height":1000}}'>
+</template>
+<script id="dc-logic" type="text/plain" data-props='{"animacion":{"editor":"boolean","default":true},"cOLO":{"editor":"color","default":"#2FB36B","section":"Identidad de compañías"},"cIntelix":{"editor":"color","default":"#00AEEF","section":"Identidad de compañías"},"cMayoreo":{"editor":"color","default":"#9AA3AD","section":"Identidad de compañías"},"cFebeca":{"editor":"color","default":"#E0359B","section":"Identidad de compañías"},"cCofersa":{"editor":"color","default":"#8ED8F8","section":"Identidad de compañías"},"cSillaca":{"editor":"color","default":"#F2A93B","section":"Identidad de compañías"},"cBeval":{"editor":"color","default":"#8B6CF0","section":"Identidad de compañías"},"cMundial":{"editor":"color","default":"#EA6A47","section":"Identidad de compañías"},"cEPA":{"editor":"color","default":"#F5C518","section":"Identidad de compañías"},"cEPACR":{"editor":"color","default":"#F5C518","section":"Identidad de compañías"},"cEPAVE":{"editor":"color","default":"#D9A21B","section":"Identidad de compañías"},"cComercializadoras":{"editor":"color","default":"#C084FC","section":"Identidad de compañías"},"cPrisma":{"editor":"color","default":"#5EEAD4","section":"Identidad de compañías"},"$preview":{"width":1440,"height":1000}}'>
 class Component extends DCLogic {
   state = { fiTab: 'resumen', calc: [1, 3, 1, 2, 2], inside: false, inCl: null, inNode: null, mod: 'capax', org: 'Todas', sub: 'Todas', sel: null, node: null, lens: 'all', tour: false, tourStep: 0, zoom: true, agSel: null, mg: 'co' };
   navKeys = ['mod', 'inside', 'inCl', 'inNode', 'node', 'sel', 'lens', 'org', 'sub', 'agSel', 'mg'];
@@ -1659,5 +1659,8 @@ class Component extends DCLogic {
   }
 }
 </script>
+<script src="assets/vendor/preact.min.js"></script>
+<script src="assets/dc-lite.js"></script>
+<script>DCLite.boot();</script>
 </body>
 </html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registro de agentes IA · Capa X</title>
+<meta name="description" content="Mapa de agentes IA de la organización: Capa X, gobierno, métricas y centinela de seguridad. Datos de ejemplo.">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0F1419}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:#7CC4FA}a:hover{color:#B5DEFD}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid #222C38;white-space:nowrap}
+th{font-size:11px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:#9AA5B4;background:#121820;position:sticky;top:0}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<noscript><p style="color:#E6EAF0;font-family:sans-serif;padding:24px">Esta aplicación necesita JavaScript.</p></noscript>
+<template id="dc-template">
+<div style="min-height: 65rem; display: flex; flex-direction: column; background: #0F1419; color: #E6EAF0; font-family: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif; font-size: 14px">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; padding: 14px 24px; border-bottom: 1px solid #222C38; background: #121820">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" style="fill: none; stroke: #7CC4FA; stroke-width: 1.8"><rect x="3" y="3" width="9" height="9" rx="2"></rect><rect x="16" y="16" width="9" height="9" rx="2"></rect><path d="M12 7.5h4.5a3 3 0 0 1 3 3V16"></path></svg>
+<span style="font-weight: 700; font-size: 16px">Capa X · Mapa de agentes</span>
+</div>
+<nav aria-label="Secciones" style="display: flex; flex-wrap: wrap; gap: 4px">
+<a href="index.html" style="padding: 8px 12px; border-radius: 6px; color: #9AA5B4; text-decoration: none">Workflow</a>
+<a href="registro.html" style="padding: 8px 12px; border-radius: 6px; background: #1C2530; color: #E6EAF0; text-decoration: none; font-weight: 500">Registro</a>
+<a href="ficha.html" style="padding: 8px 12px; border-radius: 6px; color: #9AA5B4; text-decoration: none">Fichas</a>
+</nav>
+<div style="flex: 1 1 auto"></div>
+<label style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #9AA5B4">Período
+<select style="min-height: 36px; padding: 0 10px; border-radius: 6px; border: 1px solid #2A3442; background: #0F1419; color: #E6EAF0; font: inherit"><option>Septiembre 2026</option><option>Agosto 2026</option><option>Últimos 90 días</option></select>
+</label>
+<button type="button" style="min-height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid #2A3442; background: transparent">Exportar reporte</button>
+<button type="button" style="min-height: 40px; padding: 0 16px; border-radius: 8px; border: 0; background: #7CC4FA; color: #0B1620; font-weight: 600">Registrar agente</button>
+</header>
+
+<main style="width: 100%; max-width: 1360px; margin: 0 auto; box-sizing: border-box; padding: 24px; display: flex; flex-direction: column; gap: 24px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 26px; font-weight: 600">Registro de agentes IA</h1>
+<span style="font-size: 13px; color: #9AA5B4">Todas las compañías de la organización · Mayoreo, OLO, EPA, Comercializadoras · Datos de ejemplo</span>
+</div>
+<div role="group" aria-label="Filtrar por riesgo" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px">
+<span style="font-size: 12px; color: #9AA5B4; margin-right: 4px">Riesgo</span>
+<template data-sc="for" list="{{chips}}" as="c" hint-placeholder-count="5">
+<button type="button" onClick="{{c.toggle}}" aria-pressed="{{c.pressed}}" style="min-width: 44px; min-height: 36px; padding: 4px 10px; border-radius: 6px; border: 1px solid {{c.color}}; background: {{c.bg}}; color: {{c.fg}}; font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 12px">{{c.label}}</button>
+</template>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<div style="padding: 16px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; color: #9AA5B4">Agentes registrados</span><span style="font-size: 28px; font-weight: 600; font-family: 'IBM Plex Mono', monospace">8</span><span style="font-size: 12px; color: #9AA5B4">4 en Prod · 2 en QA · 1 en Dev · 1 en diseño</span></div>
+<div style="padding: 16px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; color: #9AA5B4">Ejecuciones / mes</span><span style="font-size: 28px; font-weight: 600; font-family: 'IBM Plex Mono', monospace">36,810</span><span style="font-size: 12px; color: #9AA5B4">35,140 Prod + 1,670 QA</span></div>
+<div style="padding: 16px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; color: #9AA5B4">Gasto total / mes</span><span style="font-size: 28px; font-weight: 600; font-family: 'IBM Plex Mono', monospace">$903</span><span style="font-size: 12px; color: #9AA5B4">Suma del gasto de los 8 agentes</span></div>
+<div style="padding: 16px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; color: #9AA5B4">Horas ahorradas / mes</span><span style="font-size: 28px; font-weight: 600; font-family: 'IBM Plex Mono', monospace">830 h</span><span style="font-size: 12px; color: #9AA5B4">675 h Prod + 155 h QA estimadas</span></div>
+<div style="padding: 16px; border: 1px solid #2E5A7A; border-radius: 10px; background: #14202C; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 12px; color: #9AA5B4">ROI global</span><span style="font-size: 28px; font-weight: 600; font-family: 'IBM Plex Mono', monospace; color: #7CC4FA">11.0×</span><span style="font-size: 12px; color: #9AA5B4">830 h × $12 = $9,960 ÷ $903</span></div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<div style="flex: 2 1 480px; padding: 16px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 13px; font-weight: 600">Distribución por riesgo</span>
+<div style="display: flex; height: 28px; border-radius: 6px; overflow: hidden; gap: 2px">
+<div style="flex: 4 1 0; background: #7CC4FA; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; display: flex; align-items: center; padding-left: 8px">R1 · 4</div>
+<div style="flex: 1 1 0; background: #3B9EDB; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; display: flex; align-items: center; padding-left: 8px">R2 · 1</div>
+<div style="flex: 1 1 0; background: #E9C46A; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; display: flex; align-items: center; padding-left: 8px">R3 · 1</div>
+<div style="flex: 1 1 0; background: #F08C3A; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; display: flex; align-items: center; padding-left: 8px">R4 · 1</div>
+<div style="flex: 1 1 0; background: #E5484D; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; display: flex; align-items: center; padding-left: 8px">R5 · 1</div>
+</div>
+<span style="font-size: 12px; color: #9AA5B4">Los agentes R1 corren en n8n dentro de la Capa X. R2 a R5 aún no están en producción.</span>
+</div>
+<div style="flex: 1 1 280px; padding: 16px; border: 1px solid #222C38; border-radius: 10px; background: #121820; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 13px; font-weight: 600">Gasto por compañía / mes</span>
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span>OLO</span><span style="font-family: 'IBM Plex Mono', monospace">$481</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span>EPA</span><span style="font-family: 'IBM Plex Mono', monospace">$246</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span>Mayoreo</span><span style="font-family: 'IBM Plex Mono', monospace">$176</span></div>
+<span style="font-size: 11px; color: #9AA5B4">OLO = A-02 + A-05 + A-06 · EPA = A-03 + A-07 · Mayoreo = A-01 + A-04 + A-08</span>
+</div>
+</div>
+
+<div style="border: 1px solid #222C38; border-radius: 10px; overflow-x: auto; background: #0F1419">
+<table style="width: 100%; border-collapse: collapse; font-size: 13px">
+<thead>
+<tr><th>ID</th><th>Agente</th><th>Riesgo</th><th>Compañía</th><th>Ambiente</th><th>Vive en</th><th>Modelo IA</th><th>Orquestador</th><th>Ejec. / mes</th><th>Quién más lo usa</th><th>Gasto / mes</th><th>En prod desde</th><th>Horas / mes</th><th>Beneficio</th><th>ROI</th></tr>
+</thead>
+<tbody>
+<template data-sc="for" list="{{rows}}" as="r" hint-placeholder-count="8">
+<tr style="opacity: {{r.op}}">
+<td style="font-family: 'IBM Plex Mono', monospace; color: #9AA5B4">{{r.id}}</td>
+<td><a href="ficha.html" style="color: #E6EAF0; font-weight: 500">{{r.name}}</a></td>
+<td><span style="padding: 2px 7px; border-radius: 4px; background: {{r.color}}; color: #0B1620; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600">{{r.risk}}</span></td>
+<td>{{r.company}}</td>
+<td><span style="padding: 2px 8px; border-radius: 10px; border: 1px solid #2A3442; font-size: 12px">{{r.env}}</span></td>
+<td style="color: #B8C4D2">{{r.lives}}</td>
+<td style="color: #B8C4D2">{{r.model}}</td>
+<td style="color: #B8C4D2">{{r.orch}}</td>
+<td style="font-family: 'IBM Plex Mono', monospace; text-align: right">{{r.runs}}</td>
+<td style="color: #B8C4D2">{{r.top}}</td>
+<td style="font-family: 'IBM Plex Mono', monospace; text-align: right">{{r.spend}}</td>
+<td>{{r.since}}</td>
+<td style="font-family: 'IBM Plex Mono', monospace; text-align: right">{{r.hours}}</td>
+<td style="font-family: 'IBM Plex Mono', monospace; text-align: right">{{r.benefit}}</td>
+<td style="font-family: 'IBM Plex Mono', monospace; text-align: right; color: #7CC4FA">{{r.roi}}</td>
+</tr>
+</template>
+</tbody>
+</table>
+</div>
+<span style="font-size: 12px; color: #9AA5B4">Beneficio = horas ahorradas × $12 · ROI = beneficio ÷ gasto. Las horas de agentes en QA son estimadas.</span>
+
+</main>
+</div>
+</template>
+<script id="dc-logic" type="text/plain" data-props='{"$preview":{"width":1440,"height":1040}}'>
+class Component extends DCLogic {
+  state = { risks: { 1: true, 2: true, 3: true, 4: true, 5: true } };
+  renderVals() {
+    const C = { 1: '#7CC4FA', 2: '#3B9EDB', 3: '#E9C46A', 4: '#F08C3A', 5: '#E5484D' };
+    const data = [
+      { id: 'A-01', name: 'Clasificador de órdenes de compra', r: 1, company: 'Mayoreo · Febeca', env: 'Prod', lives: 'n8n · Docker Capa X', model: 'Claude Haiku', orch: 'n8n', runs: '18,420', top: 'Compras Febeca', spend: '$142', since: 'Mar 2026', hours: '310', benefit: '$3,720', roi: '26.2×' },
+      { id: 'A-02', name: 'Validador de recepciones', r: 1, company: 'OLO · CD', env: 'Prod', lives: 'n8n · Docker Capa X', model: 'Claude Haiku', orch: 'n8n', runs: '9,870', top: 'Recepción CD OLO', spend: '$96', since: 'May 2026', hours: '180', benefit: '$2,160', roi: '22.5×' },
+      { id: 'A-03', name: 'Extractor de facturas OCR', r: 1, company: 'EPA CR', env: 'Prod', lives: 'n8n · OCR-EFLOW', model: 'Azure OpenAI', orch: 'n8n', runs: '6,230', top: 'Cuentas por pagar EPA', spend: '$188', since: 'Jun 2026', hours: '140', benefit: '$1,680', roi: '8.9×' },
+      { id: 'A-04', name: 'Resumen diario de expediciones', r: 1, company: 'Mayoreo · Cofersa', env: 'Prod', lives: 'n8n · Docker Capa X', model: 'Claude Haiku', orch: 'n8n', runs: '620', top: 'Logística Cofersa', spend: '$34', since: 'Jul 2026', hours: '45', benefit: '$540', roi: '15.9×' },
+      { id: 'A-05', name: 'Conciliador eFlow ↔ ERP', r: 2, company: 'OLO', env: 'QA', lives: 'n8n · AWS OLO', model: 'Claude Sonnet', orch: 'n8n (piloto)', runs: '1,240', top: 'Inventarios OLO', spend: '$210', since: '—', hours: '95*', benefit: '$1,140', roi: '5.4×' },
+      { id: 'A-06', name: 'Asistente de facturación de servicios', r: 3, company: 'OLO → Mayoreo', env: 'QA', lives: 'AWS Lambda · AWS OLO', model: 'Claude Sonnet', orch: 'AWS Step Functions', runs: '430', top: 'Finanzas OLO', spend: '$175', since: '—', hours: '60*', benefit: '$720', roi: '4.1×' },
+      { id: 'A-07', name: 'Sugeridor de reubicación', r: 4, company: 'EPA VE', env: 'Dev', lives: 'AWS · OLO VE', model: 'Claude Sonnet', orch: 'Por definir', runs: '0', top: '—', spend: '$58', since: '—', hours: '—', benefit: '—', roi: '—' },
+      { id: 'A-08', name: 'Ajuste autónomo de inventario', r: 5, company: 'Mayoreo (todas)', env: 'Diseño', lives: 'Por definir', model: 'Por definir', orch: 'Por definir', runs: '0', top: '—', spend: '$0', since: '—', hours: '—', benefit: '—', roi: '—' }
+    ];
+    const st = this.state;
+    return {
+      rows: data.map((d) => Object.assign({}, d, { risk: 'R' + d.r, color: C[d.r], op: st.risks[d.r] ? 1 : 0.25 })),
+      chips: [1, 2, 3, 4, 5].map((r) => ({ label: 'R' + r, color: C[r], pressed: st.risks[r] ? 'true' : 'false', bg: st.risks[r] ? C[r] : 'transparent', fg: st.risks[r] ? '#0B1620' : '#9AA5B4', toggle: () => this.setState({ risks: Object.assign({}, st.risks, { [r]: !st.risks[r] }) }) }))
+    };
+  }
+}
+</script>
+<script src="assets/vendor/preact.min.js"></script>
+<script src="assets/dc-lite.js"></script>
+<script>DCLite.boot();</script>
+</body>
+</html>
